@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import com.example.demo.dtos.MedicoResponse;
+import com.example.demo.dtos.MedicosResponse;
 import com.example.demo.entities.Medico;
 import com.example.demo.entities.Persona;
 import com.example.demo.mappers.MedicoMapper;
@@ -24,13 +26,18 @@ public class MedicoService {
     @Autowired
     MedicoMapper mapper;
 
-    public List<Medico> getMedicos(){
-        return repository.findAll();
-        //return discoMapper.ListDiscosToDiscosResponse(discoRepository.findAll());
+    public MedicosResponse getMedicos(){
+        return mapper.ListMedicosToResponse(repository.findAll());
     }
 
-    public Optional<Medico> getById(Long id){
-        return (Optional<Medico>) repository.findById(id);
+    public MedicoResponse getById(Long id){
+        MedicoResponse response = new MedicoResponse();
+        if ((Optional<Medico>)repository.findById(id) != null){
+            response = mapper.MedicoToResponse((Medico)repository.findById(id).get());
+        }else{
+            response = null;
+        }
+        return response;
     }
 
     public ResponseEntity saveMedico(Medico medico){

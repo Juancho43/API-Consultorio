@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dtos.PersonaRequest;
+import com.example.demo.dtos.PersonaResponse;
 import com.example.demo.dtos.PersonasResponse;
 import com.example.demo.entities.Persona;
 import com.example.demo.services.PersonaService;
@@ -17,16 +19,27 @@ public class PersonaController {
     PersonaService service;
 
     @GetMapping("/{id}")
-    public Optional<Persona> getPersonaById(@PathVariable("id") Long id){
+    public ResponseEntity<PersonaResponse> getPersonaById(@PathVariable("id") Long id){
         return service.getById(id);
     }
     @GetMapping("/")
-    public List<Persona> getPersonas(){
+    public ResponseEntity<PersonasResponse> getPersonas(){
         return service.getPersonas();
     }
 
     @PostMapping("/")
-    public ResponseEntity savePersona(@RequestBody Persona persona){
+    public ResponseEntity<PersonaResponse> savePersona(@RequestBody PersonaRequest persona){
         return service.savePersona(persona);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PersonaResponse> updateById(@PathVariable("id") Long id, @RequestBody PersonaRequest request ){
+        return service.updateById(request, id);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deletePersonaById(@PathVariable("id") Long id){
+        return service.deletePersonaById(id);
+    }
+
 }

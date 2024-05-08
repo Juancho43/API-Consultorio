@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dtos.MedicoResponse;
+import com.example.demo.dtos.MedicosResponse;
 import com.example.demo.entities.Medico;
 import com.example.demo.entities.Persona;
 import com.example.demo.services.MedicoService;
@@ -22,11 +24,11 @@ public class MedicoController {
     MedicoService service;
 
     @GetMapping("/{id}")
-    public Optional<Medico> getPersonaById(@PathVariable("id") Long id){
+    public MedicoResponse getPersonaById(@PathVariable("id") Long id){
         return service.getById(id);
     }
     @GetMapping("/")
-    public List<Medico> getPersonas(){
+    public MedicosResponse getMedico(){
         return service.getMedicos();
     }
 
